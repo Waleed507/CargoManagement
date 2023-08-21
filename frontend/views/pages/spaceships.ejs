@@ -1,0 +1,89 @@
+<%- include('../template/head')-%>
+
+<body class="text-center">
+  <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <%- include('../template/nav')-%>
+      <h1 class="cover-heading">Spaceship</h1>
+      <div class="container bg-light text-dark">
+        <div class="text-center">
+          <table class="table table-striped" id="cargoTable">
+            <thead>
+              <tr>
+                <th>Max Weight </th>
+              </tr>
+            </thead>
+            <tbody>
+                <% spaceships.forEach(function(spaceship) { %>
+                  <tr>
+                    <td><%= spaceship.maxweight %></td>
+                    </td>
+                  </tr>
+                <% }); %>
+            </tbody>            
+          </table>
+        </div>
+        <div>
+          <h2>Add Spaceship</h2>
+          <form method="post" action="/add_spaceship">
+            <label for="maxweight">Max Weight:</label>
+            <input type="text" id="maxweight" name="maxweight" required>
+            <br>
+            <label for="captainid">Captain ID:</label>
+            <input type="text" id="captainid" name="captainid" required>
+            <br>
+            <button type="submit">Add Spaceship</button>
+          </form>
+        </div>
+        <div>
+          <h2>Update Spaceship</h2>
+          <form method="post" action="/update_spaceship/:id" id ="update-spaceship">
+            <label for="id">Spaceship ID:</label>
+            <input type="text" id="id" name="id" required>
+            <br>
+            <label for="maxweight">Max Weight:</label>
+            <input type="text" id="maxweight" name="maxweight" required>
+            <br>
+            <label for="captainid">Captain ID:</label>
+            <input type="text" id="captainid" name="captainid" required>
+            <br>
+            <button type="submit">Update Spaceship</button>
+          </form>
+        </div>
+        <div>
+          <h2>Delete Spaceship</h2>
+          <form method="post" action="/delete_spaceship/:id" id="delete-spaceship">
+            <label for="id">Spaceship ID:</label>
+            <input type="text" id="id" name="id" required>
+            <br>
+            <button type="submit">Delete Spaceship</button>
+          </form>
+        </div>
+      </div>
+    <%- include('../template/footer')-%>
+  </div>
+  <script>
+    const delete_spaceship = document.querySelector('#delete-spaceship');
+    const delete_id = delete_spaceship.querySelector('#id');
+  
+    delete_spaceship.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const id = delete_id.value;
+      delete_spaceship.action = `/delete_spaceship/${id}`;
+      delete_spaceship.submit();
+    });
+  </script>
+
+<script>
+  const update_spaceship = document.querySelector('#update-spaceship');
+  const Update_id = update_spaceship.querySelector('#id');
+
+  update_spaceship.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const id = Update_id.value;
+    update_spaceship.action = `/update_spaceship/${id}`;
+    update_spaceship.submit();
+  });
+</script>
+</body>
+
+</html>

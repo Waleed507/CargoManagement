@@ -1,0 +1,106 @@
+<%- include('../template/head')-%>
+
+<body class="text-center">
+  <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <%- include('../template/nav')-%>
+      <h1 class="cover-heading">Cargo</h1>
+      <div class="container bg-light text-dark">
+        <div class="text-center">
+          <table class="table table-striped" id="cargoTable">
+            <thead>
+              <tr>
+                <th> Cargo Type </th>
+                <th> Weight</th> 
+              </tr>
+            </thead>
+            <tbody>
+                <% cargos.forEach(function(cargo) { %>
+                  <tr>
+                    <td><%= cargo.cargotype %></td>
+                    <td><%= cargo.weight %></td>
+                    <td>
+                    </td>
+                  </tr>
+                <% }); %>
+            </tbody>            
+          </table>
+        </div>
+        <div>
+          <h2>Add Cargo</h2>
+          <form method="post" action="/add_cargo">
+            <label for="cargotype">Cargo Type:</label>
+            <input type="text" id="cargotype" name="cargotype" required>
+            <br>
+            <label for="weight">Weight:</label>
+            <input type="text" id="weight" name="weight" required>
+            <br>
+            <label for="shipid">Ship ID:</label>
+            <input type="text" id="shipid" name="shipid" required>
+            <br>
+            <button type="submit">Add Cargo</button>
+          </form>
+        </div>
+        <div>
+          <h2>Update Cargo</h2>
+          <form method="post" action="/update_cargo/:id" id = "update-cargo">
+            <label for="id">Cargo ID:</label>
+            <input type="text" id="id" name="id" required>
+            <br>
+            <label for="weight">Weight:</label>
+            <input type="text" id="weight" name="weight" required>
+            <br>
+            <label for="cargotype">Cargo Type:</label>
+            <input type="text" id="cargotype" name="cargotype" required>
+            <br>
+            <label for="departure">Departure Date:</label>
+            <input type="date" id="departure" name="departure" required>
+            <br>
+            <label for="arrival">Arrival Date:</label>
+            <input type="date" id="arrival" name="arrival" required>
+            <br>
+            <label for="shipid">Ship ID:</label>
+            <input type="text" id="ship id" name="shipid" required>
+            <br>
+            <button type="submit">Update Cargo</button>
+          </form>
+        </div>
+        <div>
+          <h2>Delete Cargo</h2>
+          <form method="post" action="/delete_cargo/id" id = "delete-cargo">
+            <label for="id">Cargo ID:</label>
+            <input type="text" id="id" name="id" required>
+            <br>
+            <button type="submit">Delete Cargo</button>
+          </form>
+        </div>
+      </div>
+    <%- include('../template/footer')-%>
+  </div>
+
+  <script>
+    const update_cargo = document.querySelector('#update-cargo');
+    const Update_id = update_cargo.querySelector('#id');
+  
+    update_cargo.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const id = Update_id.value;
+      update_cargo.action = `/update_cargo/${id}`;
+      update_cargo.submit();
+    });
+  </script>
+
+<script>
+  const delete_cargo = document.querySelector('#delete-cargo');
+  const delete_id = delete_cargo.querySelector('#id');
+
+  delete_cargo.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const id = delete_id.value;
+    delete_cargo.action = `/delete_cargo/${id}`;
+    delete_cargo.submit();
+  });
+</script>
+  
+</body>
+
+</html>

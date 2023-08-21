@@ -1,0 +1,110 @@
+<%- include('../template/head')-%>
+
+<body class="text-center">
+  <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <%- include('../template/nav')-%>
+      <h1 class="cover-heading">Captains</h1>
+      <div class="container bg-light text-dark">
+        <div class="text-center">
+          <table class="table table-striped" id="cargoTable">
+            <thead>
+              <tr>
+                <th>First Name </th>
+                <th>Last Name </th>
+                <th>Home Planet </th>
+                <th>Rank </th>
+              </tr>
+            </thead>
+            <tbody>
+                <% captains.forEach(function(captain) { %>
+                  <tr>
+                    <td><%= captain.firstname %></td>
+                    <td><%= captain.lastname %></td>
+                    <td><%= captain.homeplanet %></td>
+                    <td><%= captain.captain_rank %></td>
+                    <td>
+                    </td>
+                  </tr>
+                <% }); %>
+            </tbody>            
+          </table>
+        </div>
+        <div>
+          <h2>Add Captain</h2>
+          <form method="post" action="/add_captain">
+            <label for="firstname">First Name:</label>
+            <input type="text" id="firstname" name="firstname" required>
+            <br>
+            <label for="lastname">Last Name:</label>
+            <input type="text" id="lastname" name="lastname" required>
+            <br>
+            <label for="homeplanet">Home Planet:</label>
+            <input type="text" id="homeplanet" name="homeplanet" required>
+            <br>
+            <label for="captain_rank">Captain Rank:</label>
+            <input type="text" id="captain_rank" name="captain_rank" required>
+            <br>
+            <button type="submit">Add Captain</button>
+          </form>
+        </div>
+        <div>
+          <h2>Update Captain</h2>
+          <form method="post" action="/update_captain/:id" id = "update-captain">
+            <label for="id">Captain ID:</label>
+            <input type="text" id="id" name="id" required>
+            <br>
+            <label for="firstname">First Name:</label>
+            <input type="text" id="firstname" name="firstname" required>
+            <br>
+            <label for="lastname">Last Name:</label>
+            <input type="text" id="lastname" name="lastname" required>
+            <br>
+            <label for="homeplanet">Home Planet:</label>
+            <input type="text" id="homeplanet" name="homeplanet" required>
+            <br>
+            <label for="captain_rank">Captain Rank:</label>
+            <input type="text" id="captain_rank" name="captain_rank" required>
+            <br>
+            <button type="submit">Update Captain</button>
+          </form>
+        </div>
+        <div>
+          <h2>Delete Captain</h2>
+          <form method="post" action="/delete_captain/id" id = "delete-captain">
+            <label for="id">Captain ID:</label>
+            <input type="text" id="id" name="id" required>
+            <br>
+            <button type="submit">Delete Captain</button>
+          </form>
+        </div>
+      </div>
+    <%- include('../template/footer')-%>
+  </div>
+  
+  <script>
+    const update_captain = document.querySelector('#update-captain');
+    const Update_id = update_captain.querySelector('#id');
+  
+    update_captain.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const id = Update_id.value;
+      update_captain.action = `/update_captain/${id}`;
+      update_captain.submit();
+    });
+  </script>
+
+<script>
+  const delete_captain = document.querySelector('#delete-captain');
+  const delete_id = delete_captain.querySelector('#id');
+
+  delete_captain.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const id = delete_id.value;
+    delete_captain.action = `/delete_captain/${id}`;
+    delete_captain.submit();
+  });
+</script>
+  
+</body>
+
+</html>

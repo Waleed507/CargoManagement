@@ -1,0 +1,61 @@
+<%- include('../template/head')-%>
+
+<body class="text-center">
+  <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <%- include('../template/nav')-%>
+      <h1 class="cover-heading">Scheduled Cargo</h1>
+      <div class="container bg-light text-dark">
+        <form>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="showArrived" id="showArrived" <% if (showArrived) { %>checked<% } %>>
+            <label class="form-check-label" for="showArrived">
+              Show Arrived Cargos
+            </label>
+          </div>
+        </form>
+        <div class="text-center">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Weight </th>
+                <th>Cargo Type</th>
+              </tr>
+            </thead>
+            <tbody>
+                <%if(showArrived) { %>
+                  <% cargos.forEach(function(cargo) { %>
+                      <tr>
+                        <td><%= cargo.weight %></td>
+                        <td><%= cargo.cargotype %></td>
+                      </tr>
+                    <% }); %>
+                <% } %>
+                <%if(!showArrived) { %>
+                  <% cargos.forEach(function(cargo) { %>
+                      <% if (new Date(cargo.arrival) > new Date() ) { %>
+                        <tr>
+                          <td><%= cargo.weight %></td>
+                          <td><%= cargo.cargotype %></td>
+                        </tr>
+                      <% } %>
+                    <% }); %>
+                <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <%- include('../template/footer')-%>
+  </div>
+
+  <script>
+    const checkbox = document.getElementById('showArrived');
+    checkbox.addEventListener('change', (event) => {
+      const isChecked = event.target.checked;
+      const currentUrl = window.location.href.split('?')[0];
+      const newUrl = isChecked ? currentUrl + '?showArrived=on' : currentUrl;
+      window.location.href = newUrl;
+    });
+  </script>
+</body>
+
+</html>
