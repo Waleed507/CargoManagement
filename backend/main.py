@@ -1,6 +1,3 @@
-# Waleed Yusuf
-# 2104654
-
 import flask
 from flask import jsonify
 from flask import request
